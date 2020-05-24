@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 
-export default function ImageItem({ item, setImagesState }) {
-  const [show, setShow] = useState(0);
+export default function ImageItem({ item, setSelectedImage, selectedImage }) {
   return (
     <div
-      key={item.id}
       style={{
         display: "flex",
         justifyContent: "center",
@@ -12,19 +10,12 @@ export default function ImageItem({ item, setImagesState }) {
         width: "100px",
         height: "100px",
         position: "relative",
-        borderRadius: "50px",
         cursor: "pointer",
         overflow: "hidden",
         marginLeft: "10px",
         marginRight: "10px",
       }}
-      onClick={() => {
-        setShow((prevState) => !prevState);
-        setImagesState((prevState) => ({
-          ...prevState,
-          [`${item.id}`]: !prevState[`${item.id}`],
-        }));
-      }}
+      onClick={() => setSelectedImage(item.id)}
     >
       <img
         src={item.src}
@@ -46,9 +37,8 @@ export default function ImageItem({ item, setImagesState }) {
           zIndex: 100,
           width: "100%",
           height: "100%",
-          opacity: show ? 1 : 0,
+          opacity: selectedImage === item.id ? 1 : 0,
           transition: "opacity 0.2s ease-in-out",
-          borderRadius: "50px",
         }}
       >
         {/* thay cái này bằng icon V gì đó */}

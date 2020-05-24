@@ -1,36 +1,27 @@
 import React, { useState } from "react";
-import avatar from "./assets/avatar.webp";
+import avatar1 from "./assets/avatar1.png";
+import avatar2 from "./assets/avatar2.jpg";
+import avatar3 from "./assets/avatar3.png";
+import avatar4 from "./assets/avatar4.jpg";
+import avatar5 from "./assets/avatar5.jpg";
+import avatar6 from "./assets/avatar6.jpg";
 import ImageItem from "./ImageItem";
 
 const images = [
-  { src: avatar, id: 0 },
-  { src: avatar, id: 1 },
-  { src: avatar, id: 2 },
-  { src: avatar, id: 3 },
-  { src: avatar, id: 4 },
-  { src: avatar, id: 5 },
-  { src: avatar, id: 6 },
+  { src: avatar1, id: 0 },
+  { src: avatar2, id: 1 },
+  { src: avatar3, id: 2 },
+  { src: avatar4, id: 3 },
+  { src: avatar5, id: 4 },
+  { src: avatar6, id: 5 },
 ];
 
 function App() {
-  const [imagesState, setImagesState] = useState(() => {
-    const imagesStateObject = images.reduce(
-      (accum, item) => ({
-        ...accum,
-        [`${item.id}`]: false,
-      }),
-      {}
-    );
-    return imagesStateObject;
-  });
+  const [selectedImage, setSelectedImage] = useState(0);
+
   return (
     <>
-      <div>
-        The id of selected images are{" "}
-        {getShownImagesIndexes(imagesState).map((item) => (
-          <span> {item},</span>
-        ))}{" "}
-      </div>
+      <div>the id of selected image is {selectedImage}</div>
       <div
         style={{
           display: "flex",
@@ -39,7 +30,12 @@ function App() {
         }}
       >
         {images.map((item) => (
-          <ImageItem item={item} setImagesState={setImagesState} />
+          <ImageItem
+            item={item}
+            key={item.id}
+            setSelectedImage={setSelectedImage}
+            selectedImage={selectedImage}
+          />
         ))}
       </div>
     </>
@@ -47,9 +43,3 @@ function App() {
 }
 
 export default App;
-
-function getShownImagesIndexes(obj) {
-  let keysArr = Object.keys(obj);
-  let shownIndexesArr = keysArr.filter((item) => obj[`${item}`]);
-  return shownIndexesArr;
-}
